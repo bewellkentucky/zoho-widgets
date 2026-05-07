@@ -632,6 +632,15 @@
     const m = today.getMonth() - birth.getMonth();
     if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
     document.getElementById('age').value = age + ' years';
+    // Show/hide guardian tab based on age
+    const guardianPill = document.querySelectorAll('.step-pill')[5];
+    if (age < 18) {
+      guardianPill.style.display = '';
+      guardianPill.dataset.skip = 'false';
+    } else {
+      guardianPill.style.display = 'none';
+      guardianPill.dataset.skip = 'true';
+    }
   }
 
   // ── BMI calc ──
@@ -683,11 +692,23 @@
 
   function nextStep() {
     if (!validateStep()) return;
-    goToStep(currentStep + 1);
+    // Skip guardian step (step 6) if patient is 18+
+    const guardianPill = document.querySelectorAll('.step-pill')[5];
+    if (currentStep === 5 && guardianPill.dataset.skip === 'true') {
+      goToStep(7);
+    } else {
+      goToStep(currentStep + 1);
+    }
   }
 
   function prevStep() {
-    goToStep(currentStep - 1);
+    // Skip guardian step (step 6) if patient is 18+
+    const guardianPill = document.querySelectorAll('.step-pill')[5];
+    if (currentStep === 7 && guardianPill.dataset.skip === 'true') {
+      goToStep(5);
+    } else {
+      goToStep(currentStep - 1);
+    }
   }
 
   // ── Validation ──
