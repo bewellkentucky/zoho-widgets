@@ -787,6 +787,7 @@
 
     // Strip null values from payload
     Object.keys(payload).forEach(k => payload[k] === null && delete payload[k]);
+    alert("Weight value: " + payload.Weight_in_lbs + " type: " + typeof payload.Weight_in_lbs);
 
     // ── ZOHO SDK CALL ──
     if (!currentRecordId) {
