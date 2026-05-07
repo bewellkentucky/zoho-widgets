@@ -582,6 +582,20 @@
         <input type="tel" id="guardian2_phone" placeholder="(502) 000-0000">
       </div>
     </div>
+    <div class="field-group">
+      <label>Guardian 2 Email</label>
+      <input type="email" id="guardian2_email" placeholder="email@domain.com">
+    </div>
+    <div class="field-row">
+      <div class="field-group">
+        <label>Guardian 1 Notes</label>
+        <textarea id="guardian1_notes" placeholder="Notes about Guardian 1..."></textarea>
+      </div>
+      <div class="field-group">
+        <label>Guardian 2 Notes</label>
+        <textarea id="guardian2_notes" placeholder="Notes about Guardian 2..."></textarea>
+      </div>
+    </div>
   </div>
 
   <!-- SECTION 7: Review & Save -->
@@ -776,9 +790,11 @@
       Guardian_1_Name: val('guardian1_name'),
       Guardian_1_Phone: val('guardian1_phone') && val('guardian1_phone').replace(/\D/g, '').length === 10 ? val('guardian1_phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
       Guardian_1_Email: val('guardian1_email'),
+      Guardian_1_Notes: val('guardian1_notes'),
       Guardian_2_Name: val('guardian2_name'),
       Guardian_2_Phone: val('guardian2_phone') && val('guardian2_phone').replace(/\D/g, '').length === 10 ? val('guardian2_phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
       Guardian_2_Email: val('guardian2_email'),
+      Guardian_2_Notes: val('guardian2_notes'),
     };
 
     // Strip null values from payload
@@ -866,9 +882,11 @@
       if (r.Guardian_1_Name) document.getElementById('guardian1_name').value = r.Guardian_1_Name;
       if (r.Guardian_1_Phone) document.getElementById('guardian1_phone').value = r.Guardian_1_Phone;
       if (r.Guardian_1_Email) document.getElementById('guardian1_email').value = r.Guardian_1_Email;
+      if (r.Guardian_1_Notes) document.getElementById('guardian1_notes').value = r.Guardian_1_Notes;
       if (r.Guardian_2_Name) document.getElementById('guardian2_name').value = r.Guardian_2_Name;
       if (r.Guardian_2_Phone) document.getElementById('guardian2_phone').value = r.Guardian_2_Phone;
       if (r.Guardian_2_Email) document.getElementById('guardian2_email').value = r.Guardian_2_Email;
+      if (r.Guardian_2_Notes) document.getElementById('guardian2_notes').value = r.Guardian_2_Notes;
     });
   });
 
