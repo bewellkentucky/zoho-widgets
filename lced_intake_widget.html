@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LCED Intake Form</title>
+<script src="https://live.zwidgets.com/js-sdk/1.0.5/ZohoEmbededAppSDK.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --teal: #2a7f7f;
+    --teal-light: #e6f4f4;
+    --teal-mid: #c2e0e0;
+    --accent: #e07b4f;
+    --dark: #1a2e2e;
+    --mid: #4a6565;
+    --light: #f5fafa;
+    --white: #ffffff;
+    --border: #d0e4e4;
+    --script-bg: #fffbf5;
+    --script-border: #f0c99a;
+    --note-bg: #fff8e1;
+    --note-border: #ffe082;
+    --error: #c0392b;
+    --success: #27ae60;
+    --radius: 10px;
+    --shadow: 0 2px 16px rgba(42,127,127,0.10);
+  }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--light);
+    color: var(--dark);
+    font-size: 13.5px;
+    min-height: 100vh;
+  }
+
+  /* ── Header ── */
+  .header {
+    background: var(--teal);
+    padding: 14px 20px 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-logo {
+    width: 30px; height: 30px;
+    background: rgba(255,255,255,0.18);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'DM Serif Display', serif;
+    color: white; font-size: 14px; font-weight: 400;
+  }
+  .header-text { flex: 1; }
+  .header-title {
+    font-family: 'DM Serif Display', serif;
+    color: white; font-size: 15px; font-weight: 400; line-height: 1;
+  }
+  .header-sub { color: rgba(255,255,255,0.7); font-size: 11px; margin-top: 2px; }
+
+  /* ── Progress Bar ── */
+  .progress-wrap {
+    background: var(--white);
+    padding: 12px 20px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .progress-steps {
+    display: flex;
+    gap: 0;
+    margin-bottom: 10px;
+  }
+  .step-pill {
+    flex: 1;
+    text-align: center;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--mid);
+    padding-bottom: 8px;
+    border-bottom: 3px solid var(--border);
+    cursor: pointer;
+    transition: all 0.2s;
+    line-height: 1.2;
+  }
+  .step-pill.active {
+    color: var(--teal);
+    border-bottom-color: var(--teal);
+  }
+  .step-pill.complete {
+    color: var(--success);
+    border-bottom-color: var(--success);
+  }
+  .step-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    background: var(--border);
+    color: var(--mid);
+    font-size: 9px; font-weight: 600;
+    margin-bottom: 3px;
+  }
+  .step-pill.active .step-num { background: var(--teal); color: white; }
+  .step-pill.complete .step-num { background: var(--success); color: white; }
+
+  /* ── Content ── */
+  .content {
+    padding: 16px 20px 100px;
+  }
+
+  .section { display: none; animation: fadeIn 0.25s ease; }
+  .section.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+  .section-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 18px; color: var(--teal);
+    margin-bottom: 4px;
+  }
+  .section-divider {
+    height: 2px;
+    background: linear-gradient(90deg, var(--teal-mid), transparent);
+    margin-bottom: 14px;
+  }
+
+  /* ── Script Box ── */
+  .script-box {
+    background: var(--script-bg);
+    border: 1px solid var(--script-border);
+    border-left: 4px solid var(--accent);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    margin-bottom: 16px;
+  }
+  .script-label {
+    font-size: 10px; font-weight: 600; letter-spacing: 0.06em;
+    color: var(--accent); text-transform: uppercase; margin-bottom: 5px;
+  }
+  .script-text { color: #5a3a1a; font-size: 13px; line-height: 1.6; font-style: italic; }
+
+  /* ── Note Box ── */
+  .note-box {
+    background: var(--note-bg);
+    border: 1px solid var(--note-border);
+    border-left: 4px solid #f9a825;
+    border-radius: var(--radius);
+    padding: 10px 14px;
+    margin-bottom: 16px;
+  }
+  .note-label { font-size: 10px; font-weight: 600; color: #e65100; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px; }
+  .note-text { color: #5a3a00; font-size: 12.5px; line-height: 1.5; }
+
+  /* ── Wrap-up Box ── */
+  .wrapup-box {
+    background: var(--teal-light);
+    border: 1px solid var(--teal-mid);
+    border-left: 4px solid var(--teal);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    margin-top: 16px;
+  }
+  .wrapup-label { font-size: 10px; font-weight: 600; color: var(--teal); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 5px; }
+  .wrapup-text { color: var(--dark); font-size: 13px; line-height: 1.6; font-style: italic; }
+
+  /* ── Form Fields ── */
+  .field-group { margin-bottom: 13px; }
+  .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .field-row.three { grid-template-columns: 1fr 1fr 1fr; }
+
+  label {
+    display: block;
+    font-size: 11px; font-weight: 600;
+    color: var(--mid);
+    text-transform: uppercase; letter-spacing: 0.04em;
+    margin-bottom: 4px;
+  }
+  label .req { color: var(--accent); margin-left: 2px; }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="date"],
+  input[type="number"],
+  textarea,
+  select {
+    width: 100%;
+    padding: 8px 11px;
+    border: 1.5px solid var(--border);
+    border-radius: 7px;
+    background: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    color: var(--dark);
+    transition: border-color 0.18s, box-shadow 0.18s;
+    outline: none;
+  }
+  input:focus, textarea:focus, select:focus {
+    border-color: var(--teal);
+    box-shadow: 0 0 0 3px rgba(42,127,127,0.12);
+  }
+  input[readonly] {
+    background: var(--teal-light);
+    color: var(--teal);
+    font-weight: 500;
+    cursor: default;
+  }
+  textarea { resize: vertical; min-height: 72px; }
+  select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%234a6565' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; padding-right: 28px; }
+
+  /* Radio / Checkbox groups */
+  .radio-group, .check-group {
+    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 2px;
+  }
+  .radio-group label, .check-group label {
+    display: flex; align-items: center; gap: 5px;
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 12px; font-weight: 400;
+    text-transform: none; letter-spacing: 0;
+    color: var(--dark);
+    transition: all 0.15s;
+  }
+  .radio-group label:hover, .check-group label:hover { border-color: var(--teal); background: var(--teal-light); }
+  .radio-group input, .check-group input { accent-color: var(--teal); width: 13px; height: 13px; }
+  .radio-group input:checked + span, .check-group input:checked + span { color: var(--teal); font-weight: 600; }
+  .radio-group label:has(input:checked), .check-group label:has(input:checked) {
+    border-color: var(--teal); background: var(--teal-light);
+  }
+
+  /* ── Footer Nav ── */
+  .footer {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--white);
+    border-top: 1px solid var(--border);
+    padding: 10px 20px;
+    display: flex; gap: 8px; align-items: center;
+    box-shadow: 0 -2px 12px rgba(42,127,127,0.08);
+  }
+  .btn {
+    padding: 9px 18px;
+    border-radius: 7px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 600;
+    border: none; cursor: pointer;
+    transition: all 0.18s;
+  }
+  .btn-back {
+    background: var(--white);
+    border: 1.5px solid var(--border);
+    color: var(--mid);
+  }
+  .btn-back:hover { border-color: var(--teal); color: var(--teal); }
+  .btn-next {
+    background: var(--teal);
+    color: white;
+    flex: 1;
+    box-shadow: 0 2px 8px rgba(42,127,127,0.25);
+  }
+  .btn-next:hover { background: #236969; }
+  .btn-save {
+    background: var(--accent);
+    color: white;
+    flex: 1;
+    box-shadow: 0 2px 8px rgba(224,123,79,0.3);
+  }
+  .btn-save:hover { background: #c0622e; }
+
+  .step-counter {
+    font-size: 11px; color: var(--mid); white-space: nowrap;
+  }
+
+  /* ── Toast ── */
+  .toast {
+    position: fixed; top: 70px; left: 50%; transform: translateX(-50%);
+    background: var(--dark); color: white;
+    padding: 10px 20px; border-radius: 8px;
+    font-size: 13px; font-weight: 500;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+    z-index: 999;
+    white-space: nowrap;
+  }
+  .toast.show { opacity: 1; }
+  .toast.success { background: var(--success); }
+  .toast.error { background: var(--error); }
+
+  /* ── Summary ── */
+  #summary-section { display: none; }
+  #summary-section.active { display: block; }
+  .summary-group { margin-bottom: 14px; }
+  .summary-group-title {
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.06em; color: var(--teal);
+    border-bottom: 1px solid var(--teal-mid);
+    padding-bottom: 4px; margin-bottom: 8px;
+  }
+  .summary-row { display: flex; gap: 8px; padding: 3px 0; border-bottom: 1px solid var(--light); }
+  .summary-key { width: 45%; font-size: 11px; color: var(--mid); font-weight: 500; }
+  .summary-val { flex: 1; font-size: 12px; color: var(--dark); }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="header">
+  <div class="header-logo">L</div>
+  <div class="header-text">
+    <div class="header-title">Patient Intake</div>
+    <div class="header-sub">Louisville Center for Eating Disorders</div>
+  </div>
+</div>
+
+<!-- Progress -->
+<div class="progress-wrap">
+  <div class="progress-steps">
+    <div class="step-pill active" onclick="goToStep(1)">
+      <div class="step-num">1</div><br>Contact
+    </div>
+    <div class="step-pill" onclick="goToStep(2)">
+      <div class="step-num">2</div><br>Patient
+    </div>
+    <div class="step-pill" onclick="goToStep(3)">
+      <div class="step-num">3</div><br>Treatment
+    </div>
+    <div class="step-pill" onclick="goToStep(4)">
+      <div class="step-num">4</div><br>ED Screen
+    </div>
+    <div class="step-pill" onclick="goToStep(5)">
+      <div class="step-num">5</div><br>Referral
+    </div>
+    <div class="step-pill" onclick="goToStep(6)">
+      <div class="step-num">6</div><br>Guardian
+    </div>
+    <div class="step-pill" id="step-pill-7">
+      <div class="step-num">✓</div><br>Review
+    </div>
+  </div>
+</div>
+
+<!-- Content -->
+<div class="content">
+
+  <!-- SECTION 1: Contact Information -->
+  <div class="section active" id="section-1">
+    <div class="section-title">Contact Information</div>
+    <div class="section-divider"></div>
+
+    <div class="script-box">
+      <div class="script-label">📞 Read to Patient</div>
+      <div class="script-text">"Hi there, thanks so much for reaching out to us! We received your inquiry, and I'm following up to help get you started. Let me just confirm I have your basic information correct."</div>
+    </div>
+
+    <div class="field-row">
+      <div class="field-group">
+        <label>First Name <span class="req">*</span></label>
+        <input type="text" id="first_name" placeholder="First name">
+      </div>
+      <div class="field-group">
+        <label>Last Name <span class="req">*</span></label>
+        <input type="text" id="last_name" placeholder="Last name">
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field-group">
+        <label>Phone <span class="req">*</span></label>
+        <input type="tel" id="phone" placeholder="(502) 000-0000">
+      </div>
+      <div class="field-group">
+        <label>Email</label>
+        <input type="email" id="email" placeholder="patient@email.com">
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: Patient Details -->
+  <div class="section" id="section-2">
+    <div class="section-title">Patient Details</div>
+    <div class="section-divider"></div>
+
+    <div class="field-row">
+      <div class="field-group">
+        <label>Date of Birth <span class="req">*</span></label>
+        <input type="date" id="dob" onchange="calcAge()">
+      </div>
+      <div class="field-group">
+        <label>Age (auto-calculated)</label>
+        <input type="text" id="age" readonly placeholder="—">
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field-group">
+        <label>Insurance Provider</label>
+        <input type="text" id="insurance_provider" placeholder="e.g. BlueCross BlueShield">
+      </div>
+      <div class="field-group">
+        <label>Other / Secondary Insurance</label>
+        <input type="text" id="other_insurance" placeholder="e.g. Medicaid">
+      </div>
+    </div>
+    <div class="field-group">
+      <label>Program Interest(s)</label>
+      <div class="check-group">
+        <label><input type="checkbox" name="program" value="PHP"> <span>PHP</span></label>
+        <label><input type="checkbox" name="program" value="IOP"> <span>IOP</span></label>
+        <label><input type="checkbox" name="program" value="OP"> <span>OP (Outpatient)</span></label>
+        <label><input type="checkbox" name="program" value="Unsure"> <span>Unsure</span></label>
+      </div>
+    </div>
+    <div class="field-group">
+      <label>Patient Comments</label>
+      <textarea id="patient_comments" placeholder="Notes or comments shared by the patient..."></textarea>
+    </div>
+    <div class="field-group">
+      <label>Be Well Notes (Internal)</label>
+      <textarea id="be_well_notes" placeholder="Internal staff notes..."></textarea>
+    </div>
+  </div>
+
+  <!-- SECTION 3: Treatment Questions -->
+  <div class="section" id="section-3">
+    <div class="section-title">Treatment Questions</div>
+    <div class="section-divider"></div>
+
+    <div class="field-group">
+      <label>Currently Taking Medications?</label>
+      <div class="radio-group">
+        <label><input type="radio" name="medications" value="Yes"> <span>Yes</span></label>
+        <label><input type="radio" name="medications" value="No"> <span>No</span></label>
+        <label><input type="radio" name="medications" value="Unknown"> <span>Unknown</span></label>
+      </div>
+    </div>
+    <div class="field-group">
+      <label>Current Therapist</label>
+      <input type="text" id="current_therapist" placeholder="Therapist name (if applicable)">
+    </div>
+    <div class="field-group">
+      <label>Mental Health Diagnosis?</label>
+      <input type="text" id="mh_diagnosis" placeholder="e.g. Depression, Anxiety, PTSD...">
+    </div>
+    <div class="field-group">
+      <label>Suicidal Thoughts?</label>
+      <div class="radio-group">
+        <label><input type="radio" name="si_thoughts" value="Yes"> <span>Yes</span></label>
+        <label><input type="radio" name="si_thoughts" value="No"> <span>No</span></label>
+        <label><input type="radio" name="si_thoughts" value="Declined to Answer"> <span>Declined to Answer</span></label>
+      </div>
+    </div>
+    <div class="field-group">
+      <label>Suicidal Intentions?</label>
+      <div class="radio-group">
+        <label><input type="radio" name="si_intent" value="Yes"> <span>Yes</span></label>
+        <label><input type="radio" name="si_intent" value="No"> <span>No</span></label>
+        <label><input type="radio" name="si_intent" value="Declined to Answer"> <span>Declined to Answer</span></label>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 4: ED Questionnaire -->
+  <div class="section" id="section-4">
+    <div class="section-title">ED Questionnaire</div>
+    <div class="section-divider"></div>
+
+    <div class="script-box">
+      <div class="script-label">📞 Read to Patient</div>
+      <div class="script-text">"Before we talk about the process, I just need to gather a little bit of clinical information to make sure we get you set up with the perfect level of care. Is it okay if I ask you a few quick questions?"</div>
+    </div>
+
+    <div class="field-group">
+      <label>Brief Summary of Symptoms & Frequency</label>
+      <textarea id="symptom_summary" placeholder="Describe symptoms and how often they occur..."></textarea>
+    </div>
+    <div class="field-group">
+      <label>Previous Diagnosis of Eating Disorder?</label>
+      <div class="radio-group">
+        <label><input type="radio" name="prev_ed_dx" value="Yes"> <span>Yes</span></label>
+        <label><input type="radio" name="prev_ed_dx" value="No"> <span>No</span></label>
+        <label><input type="radio" name="prev_ed_dx" value="Unknown"> <span>Unknown</span></label>
+      </div>
+    </div>
+    <div class="field-row three">
+      <div class="field-group">
+        <label>Height (inches)</label>
+        <input type="number" id="height_in" placeholder="e.g. 65" min="36" max="96" onchange="calcBMI()">
+      </div>
+      <div class="field-group">
+        <label>Weight (lbs)</label>
+        <input type="number" id="weight_lbs" placeholder="e.g. 130" min="50" max="600" onchange="calcBMI()">
+      </div>
+      <div class="field-group">
+        <label>BMI (auto-calculated)</label>
+        <input type="text" id="bmi" readonly placeholder="—">
+      </div>
+    </div>
+
+    <div class="wrapup-box">
+      <div class="wrapup-label">📋 Next Steps — Read to Patient</div>
+      <div class="wrapup-text">"Thank you for sharing that. Here are the next steps: First, we will schedule an initial clinical consult. We will also need you to complete routine medical labs. While you do that, we will verify your insurance benefits, and then we can finalize your intake!"</div>
+    </div>
+  </div>
+
+  <!-- SECTION 5: Patient Referral -->
+  <div class="section" id="section-5">
+    <div class="section-title">Patient Referral</div>
+    <div class="section-divider"></div>
+
+    <div class="field-group">
+      <label>How did you hear about us?</label>
+      <select id="referrer_type">
+        <option value="">— Select —</option>
+        <option>Physician / PCP Referral</option>
+        <option>Therapist Referral</option>
+        <option>Self-Referral / Internet Search</option>
+        <option>Insurance Directory</option>
+        <option>Past Patient / Word of Mouth</option>
+        <option>Other Provider / Hospital</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="field-row">
+      <div class="field-group">
+        <label>Referral Contact Name</label>
+        <input type="text" id="referral_name" placeholder="Full name">
+      </div>
+      <div class="field-group">
+        <label>Referral Email</label>
+        <input type="email" id="referral_email" placeholder="email@domain.com">
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field-group">
+        <label>Referral Phone</label>
+        <input type="tel" id="referral_phone" placeholder="(502) 000-0000">
+      </div>
+      <div class="field-group">
+        <label>Referral Account / Company</label>
+        <input type="text" id="referral_account" placeholder="Practice or organization name">
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 6: Guardian Information -->
+  <div class="section" id="section-6">
+    <div class="section-title">Guardian Information</div>
+    <div class="section-divider"></div>
+
+    <div class="note-box">
+      <div class="note-label">⚠️ Staff Note</div>
+      <div class="note-text">Only complete this section if the patient is <strong>under 18 years of age</strong>. Skip and proceed to Review if not applicable.</div>
+    </div>
+
+    <div style="font-size:12px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;">Guardian 1</div>
+    <div class="field-row">
+      <div class="field-group">
+        <label>Guardian 1 Name</label>
+        <input type="text" id="guardian1_name" placeholder="Full name">
+      </div>
+      <div class="field-group">
+        <label>Guardian 1 Phone</label>
+        <input type="tel" id="guardian1_phone" placeholder="(502) 000-0000">
+      </div>
+    </div>
+    <div class="field-group">
+      <label>Guardian 1 Email</label>
+      <input type="email" id="guardian1_email" placeholder="email@domain.com">
+    </div>
+
+    <div style="font-size:12px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.04em;margin:12px 0 8px;">Guardian 2 (if applicable)</div>
+    <div class="field-row">
+      <div class="field-group">
+        <label>Guardian 2 Name</label>
+        <input type="text" id="guardian2_name" placeholder="Full name">
+      </div>
+      <div class="field-group">
+        <label>Guardian 2 Phone</label>
+        <input type="tel" id="guardian2_phone" placeholder="(502) 000-0000">
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 7: Review & Save -->
+  <div class="section" id="section-7">
+    <div class="section-title">Review & Save</div>
+    <div class="section-divider"></div>
+    <div id="summary-content"></div>
+  </div>
+
+</div><!-- /content -->
+
+<!-- Footer Nav -->
+<div class="footer">
+  <button class="btn btn-back" id="btn-back" onclick="prevStep()" style="display:none">← Back</button>
+  <span class="step-counter" id="step-counter">Step 1 of 7</span>
+  <button class="btn btn-next" id="btn-next" onclick="nextStep()">Next →</button>
+  <button class="btn btn-save" id="btn-save" onclick="saveRecord()" style="display:none">💾 Save to CRM</button>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<script>
+  let currentStep = 1;
+  const totalSteps = 7;
+
+  // ── Age calc ──
+  function calcAge() {
+    const dob = document.getElementById('dob').value;
+    if (!dob) return;
+    const today = new Date();
+    const birth = new Date(dob);
+    let age = today.getFullYear() - birth.getFullYear();
+    const m = today.getMonth() - birth.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+    document.getElementById('age').value = age + ' years';
+  }
+
+  // ── BMI calc ──
+  function calcBMI() {
+    const h = parseFloat(document.getElementById('height_in').value);
+    const w = parseFloat(document.getElementById('weight_lbs').value);
+    if (h > 0 && w > 0) {
+      const bmi = ((w / (h * h)) * 703).toFixed(1);
+      document.getElementById('bmi').value = bmi;
+    }
+  }
+
+  // ── Toast ──
+  function showToast(msg, type='') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = 'toast show ' + type;
+    setTimeout(() => t.className = 'toast', 2500);
+  }
+
+  // ── Navigation ──
+  function goToStep(n) {
+    if (n < 1 || n > totalSteps) return;
+
+    // Deactivate current
+    document.getElementById('section-' + currentStep).classList.remove('active');
+    document.querySelectorAll('.step-pill')[currentStep - 1].classList.remove('active');
+
+    // Mark previous steps as complete
+    document.querySelectorAll('.step-pill').forEach((pill, i) => {
+      if (i < n - 1) pill.classList.add('complete');
+      else if (i >= n - 1) pill.classList.remove('complete');
+    });
+
+    currentStep = n;
+
+    if (currentStep === totalSteps) buildSummary();
+    document.getElementById('section-' + currentStep).classList.add('active');
+    document.querySelectorAll('.step-pill')[currentStep - 1].classList.add('active');
+    document.querySelectorAll('.step-pill')[currentStep - 1].classList.remove('complete');
+
+    document.getElementById('step-counter').textContent = 'Step ' + currentStep + ' of ' + totalSteps;
+    document.getElementById('btn-back').style.display = currentStep > 1 ? 'inline-flex' : 'none';
+    document.getElementById('btn-next').style.display = currentStep < totalSteps ? 'inline-flex' : 'none';
+    document.getElementById('btn-save').style.display = currentStep === totalSteps ? 'inline-flex' : 'none';
+
+    window.scrollTo(0, 0);
+  }
+
+  function nextStep() {
+    if (!validateStep()) return;
+    goToStep(currentStep + 1);
+  }
+
+  function prevStep() {
+    goToStep(currentStep - 1);
+  }
+
+  // ── Validation ──
+  function validateStep() {
+    return true;
+  }
+
+  // ── Get checked values ──
+  function getChecked(name) {
+    const vals = Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(e => e.value).join(', ');
+    return vals || null;
+  }
+  function getRadio(name) {
+    const el = document.querySelector(`input[name="${name}"]:checked`);
+    return el ? el.value : null;
+  }
+  function val(id) { 
+    const v = document.getElementById(id)?.value?.trim();
+    return (v && v !== '—') ? v : null;
+  }
+
+  // ── Build Summary ──
+  function buildSummary() {
+    const rows = [
+      { group: 'Contact Information', fields: [
+        ['First Name', val('first_name')], ['Last Name', val('last_name')],
+        ['Phone', val('phone')], ['Email', val('email')]
+      ]},
+      { group: 'Patient Details', fields: [
+        ['Date of Birth', val('dob')], ['Age', val('age')],
+        ['Insurance Provider', val('insurance_provider')], ['Other Insurance', val('other_insurance')],
+        ['Program Interest(s)', getChecked('program')],
+        ['Patient Comments', val('patient_comments')], ['Be Well Notes', val('be_well_notes')]
+      ]},
+      { group: 'Treatment Questions', fields: [
+        ['Taking Medications?', getRadio('medications')],
+        ['Current Therapist', val('current_therapist')],
+        ['MH Diagnosis', val('mh_diagnosis')],
+        ['Suicidal Thoughts?', getRadio('si_thoughts')],
+        ['Suicidal Intentions?', getRadio('si_intent')]
+      ]},
+      { group: 'ED Questionnaire', fields: [
+        ['Symptom Summary', val('symptom_summary')],
+        ['Previous ED Diagnosis?', getRadio('prev_ed_dx')],
+        ['Height (in)', val('height_in')], ['Weight (lbs)', val('weight_lbs')],
+        ['BMI', val('bmi')]
+      ]},
+      { group: 'Referral', fields: [
+        ['How Did You Hear?', val('referrer_type')],
+        ['Referral Name', val('referral_name')], ['Referral Email', val('referral_email')],
+        ['Referral Phone', val('referral_phone')], ['Referral Account', val('referral_account')]
+      ]},
+      { group: 'Guardian Information', fields: [
+        ['Guardian 1 Name', val('guardian1_name')], ['Guardian 1 Phone', val('guardian1_phone')],
+        ['Guardian 1 Email', val('guardian1_email')],
+        ['Guardian 2 Name', val('guardian2_name')], ['Guardian 2 Phone', val('guardian2_phone')]
+      ]}
+    ];
+
+    let html = '';
+    rows.forEach(r => {
+      html += `<div class="summary-group"><div class="summary-group-title">${r.group}</div>`;
+      r.fields.forEach(([k, v]) => {
+        html += `<div class="summary-row"><div class="summary-key">${k}</div><div class="summary-val">${v}</div></div>`;
+      });
+      html += '</div>';
+    });
+    document.getElementById('summary-content').innerHTML = html;
+  }
+
+  // ── Save to CRM ──
+  function saveRecord() {
+    if (typeof ZOHO === 'undefined' || typeof ZOHO.CRM === 'undefined') {
+      alert("ZOHO SDK not loaded — external hosting SDK issue confirmed");
+      return;
+    }
+    // Collect all data into a payload
+    const payload = {
+      First_Name: val('first_name'),
+      Last_Name: val('last_name'),
+      Phone: val('phone') ? val('phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
+      Email: val('email'),
+      Date_of_Birth: val('dob'),
+      Age: val('age'),
+      Insurance_Provider: val('insurance_provider'),
+      Other_Insurance: val('other_insurance'),
+      Program_Interests: getChecked('program'),
+      Patient_Comments: val('patient_comments'),
+      Be_Well_Notes: val('be_well_notes'),
+      Currently_Taking_Medications: getRadio('medications'),
+      Current_Therapist: val('current_therapist'),
+      MH_Diagnosis: val('mh_diagnosis'),
+      Suicidal_Thoughts: getRadio('si_thoughts'),
+      Suicidal_Intentions: getRadio('si_intent'),
+      Symptom_Summary: val('symptom_summary'),
+      Previous_ED_Diagnosis: getRadio('prev_ed_dx'),
+      Height_Inches: val('height_in'),
+      Weight_Lbs: val('weight_lbs'),
+      BMI: val('bmi'),
+      Referrer_Type: val('referrer_type'),
+      Referral_Name: val('referral_name'),
+      Referral_Email: val('referral_email'),
+      Referral_Phone: val('referral_phone') ? val('referral_phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
+      Referral_Account: val('referral_account'),
+      Guardian1_Name: val('guardian1_name'),
+      Guardian1_Phone: val('guardian1_phone') ? val('guardian1_phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
+      Guardian1_Email: val('guardian1_email'),
+      Guardian2_Name: val('guardian2_name'),
+      Guardian2_Phone: val('guardian2_phone') ? val('guardian2_phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
+    };
+
+    // Strip null values from payload
+    Object.keys(payload).forEach(k => payload[k] === null && delete payload[k]);
+
+    // ── ZOHO SDK CALL ──
+    if (!currentRecordId) {
+      showToast("No record ID found — try closing and reopening", "error");
+      return;
+    }
+    ZOHO.CRM.API.updateRecord({
+      Entity: "Contacts",
+      APIData: { id: currentRecordId, ...payload },
+      Trigger: []
+    }).then(function(response) {
+      if (response.data && response.data[0].code === "SUCCESS") {
+        showToast("✓ Intake saved successfully!", "success");
+        setTimeout(() => {
+          document.getElementById('btn-save').textContent = '✓ Saved';
+          document.getElementById('btn-save').style.background = 'var(--success)';
+        }, 600);
+      } else {
+        showToast("Save failed — check field API names", "error");
+        console.error("Save response:", JSON.stringify(response));
+      }
+    }).catch(function(err) {
+      showToast("API Error — check console", "error");
+      console.error("API Error:", JSON.stringify(err));
+    });
+  }
+
+  // ── Init Zoho SDK ──
+  let currentRecordId = null;
+
+  ZOHO.embeddedApp.on("PageLoad", function(data) {
+    console.log("PageLoad fired:", JSON.stringify(data));
+    const id = Array.isArray(data.EntityId) ? data.EntityId[0] : data.EntityId;
+    if (!id) { console.log("No EntityId found in PageLoad data"); return; }
+    currentRecordId = id;
+    console.log("Record ID stored:", currentRecordId);
+    ZOHO.CRM.API.getRecord({ Entity: "Contacts", RecordID: id }).then(function(result) {
+      console.log("CRM Record result:", JSON.stringify(result));
+      const r = result.data[0];
+      if (!r) { console.log("No record data returned"); return; }
+
+      // Section 1 - Contact Info
+      if (r.First_Name) document.getElementById('first_name').value = r.First_Name;
+      if (r.Last_Name) document.getElementById('last_name').value = r.Last_Name;
+      if (r.Phone) document.getElementById('phone').value = r.Phone;
+      if (r.Email) document.getElementById('email').value = r.Email;
+
+      // Section 2 - Patient Details
+      if (r.Date_of_Birth) { document.getElementById('dob').value = r.Date_of_Birth; calcAge(); }
+      if (r.Insurance_Provider) document.getElementById('insurance_provider').value = r.Insurance_Provider;
+      if (r.Other_Insurance) document.getElementById('other_insurance').value = r.Other_Insurance;
+      if (r.Patient_Comments) document.getElementById('patient_comments').value = r.Patient_Comments;
+      if (r.Be_Well_Notes) document.getElementById('be_well_notes').value = r.Be_Well_Notes;
+      if (r.Program_Interests) {
+        const vals = r.Program_Interests.split(';').map(v => v.trim());
+        document.querySelectorAll('input[name="program"]').forEach(cb => {
+          if (vals.includes(cb.value)) cb.checked = true;
+        });
+      }
+
+      // Section 3 - Treatment Questions
+      if (r.Currently_Taking_Medications) setRadio('medications', r.Currently_Taking_Medications);
+      if (r.Current_Therapist) document.getElementById('current_therapist').value = r.Current_Therapist;
+      if (r.MH_Diagnosis) document.getElementById('mh_diagnosis').value = r.MH_Diagnosis;
+      if (r.Suicidal_Thoughts) setRadio('si_thoughts', r.Suicidal_Thoughts);
+      if (r.Suicidal_Intentions) setRadio('si_intent', r.Suicidal_Intentions);
+
+      // Section 4 - ED Questionnaire
+      if (r.Symptom_Summary) document.getElementById('symptom_summary').value = r.Symptom_Summary;
+      if (r.Previous_ED_Diagnosis) setRadio('prev_ed_dx', r.Previous_ED_Diagnosis);
+      if (r.Height_Inches) { document.getElementById('height_in').value = r.Height_Inches; }
+      if (r.Weight_Lbs) { document.getElementById('weight_lbs').value = r.Weight_Lbs; calcBMI(); }
+
+      // Section 5 - Referral
+      if (r.Referrer_Type) document.getElementById('referrer_type').value = r.Referrer_Type;
+      if (r.Referral_Name) document.getElementById('referral_name').value = r.Referral_Name;
+      if (r.Referral_Email) document.getElementById('referral_email').value = r.Referral_Email;
+      if (r.Referral_Phone) document.getElementById('referral_phone').value = r.Referral_Phone;
+      if (r.Referral_Account) document.getElementById('referral_account').value = r.Referral_Account;
+
+      // Section 6 - Guardian
+      if (r.Guardian1_Name) document.getElementById('guardian1_name').value = r.Guardian1_Name;
+      if (r.Guardian1_Phone) document.getElementById('guardian1_phone').value = r.Guardian1_Phone;
+      if (r.Guardian1_Email) document.getElementById('guardian1_email').value = r.Guardian1_Email;
+      if (r.Guardian2_Name) document.getElementById('guardian2_name').value = r.Guardian2_Name;
+      if (r.Guardian2_Phone) document.getElementById('guardian2_phone').value = r.Guardian2_Phone;
+    });
+  });
+
+  function setRadio(name, value) {
+    const el = document.querySelector(`input[name="${name}"][value="${value}"]`);
+    if (el) el.checked = true;
+  }
+
+  ZOHO.embeddedApp.init();
+</script>
+</body>
+</html>
