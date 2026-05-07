@@ -807,6 +807,7 @@
 
     // Strip null values from payload
     Object.keys(payload).forEach(k => payload[k] === null && delete payload[k]);
+    alert("Who Referred: " + document.getElementById('referral_name')?.value + " | payload: " + payload.Who_Referred_You);
 
     // ── ZOHO SDK CALL ──
     if (!currentRecordId) {
@@ -846,8 +847,6 @@
       console.log("CRM Record result:", JSON.stringify(result));
       const r = result.data[0];
       if (!r) { console.log("No record data returned"); return; }
-      const referKeys = Object.keys(r).filter(k => k.toLowerCase().includes('who') || k.toLowerCase().includes('hear'));
-      alert("Referral fields: " + referKeys.join(', '));
 
       // Section 1 - Contact Info
       if (r.First_Name) document.getElementById('first_name').value = r.First_Name;
