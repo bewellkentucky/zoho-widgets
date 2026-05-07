@@ -807,7 +807,6 @@
 
     // Strip null values from payload
     Object.keys(payload).forEach(k => payload[k] === null && delete payload[k]);
-    alert("Who Referred: " + document.getElementById('referral_name')?.value + " | payload: " + payload.Who_Referred_You);
 
     // ── ZOHO SDK CALL ──
     if (!currentRecordId) {
