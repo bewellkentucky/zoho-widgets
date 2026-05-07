@@ -771,14 +771,13 @@
       Previous_Diagnosis_of_ED: getRadio('prev_ed_dx'),
       Height_in_inches: val('height_in') ? parseFloat(val('height_in')) : null,
       Patient_Weight: val('weight_lbs') ? parseFloat(val('weight_lbs')) : null,
-      Referral_Name: val('referral_name'),
       Referral_Email: val('referral_email') && val('referral_email').includes('@') ? val('referral_email') : null,
       Referral_Phone: val('referral_phone') && val('referral_phone').replace(/\D/g, '').length === 10 ? val('referral_phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
-      Guardian1_Name: val('guardian1_name'),
-      Guardian1_Phone: val('guardian1_phone') && val('guardian1_phone').replace(/\D/g, '').length === 10 ? val('guardian1_phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
+      Guardian_1_Name: val('guardian1_name'),
+      Guardian_1_Phone: val('guardian1_phone') && val('guardian1_phone').replace(/\D/g, '').length === 10 ? val('guardian1_phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
       Guardian_1_Email: val('guardian1_email'),
-      Guardian2_Name: val('guardian2_name'),
-      Guardian2_Phone: val('guardian2_phone') && val('guardian2_phone').replace(/\D/g, '').length === 10 ? val('guardian2_phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
+      Guardian_2_Name: val('guardian2_name'),
+      Guardian_2_Phone: val('guardian2_phone') && val('guardian2_phone').replace(/\D/g, '').length === 10 ? val('guardian2_phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
       Guardian_2_Email: val('guardian2_email'),
     };
 
@@ -837,7 +836,9 @@
       if (r.Patient_Comments) document.getElementById('patient_comments').value = r.Patient_Comments;
       if (r.Be_Well_Notes) document.getElementById('be_well_notes').value = r.Be_Well_Notes;
       if (r.Program_Interest_s) {
-        const vals = r.Program_Interest_s.split(';').map(v => v.trim());
+        const vals = Array.isArray(r.Program_Interest_s) 
+          ? r.Program_Interest_s 
+          : r.Program_Interest_s.split(';').map(v => v.trim());
         document.querySelectorAll('input[name="program"]').forEach(cb => {
           if (vals.includes(cb.value)) cb.checked = true;
         });
@@ -862,9 +863,12 @@
       if (r.Referral_Account) document.getElementById('referral_account').value = r.Referral_Account;
 
       // Section 6 - Guardian
+      if (r.Guardian_1_Name) document.getElementById('guardian1_name').value = r.Guardian_1_Name;
+      if (r.Guardian_1_Phone) document.getElementById('guardian1_phone').value = r.Guardian_1_Phone;
       if (r.Guardian_1_Email) document.getElementById('guardian1_email').value = r.Guardian_1_Email;
-      if (r.Guardian_2_Email) document.getElementById('guardian2_email').value = r.Guardian_2_Email;
+      if (r.Guardian_2_Name) document.getElementById('guardian2_name').value = r.Guardian_2_Name;
       if (r.Guardian_2_Phone) document.getElementById('guardian2_phone').value = r.Guardian_2_Phone;
+      if (r.Guardian_2_Email) document.getElementById('guardian2_email').value = r.Guardian_2_Email;
     });
   });
 
