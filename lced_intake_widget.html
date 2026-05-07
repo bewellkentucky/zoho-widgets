@@ -770,9 +770,9 @@
       Suicidal_Intentions: getRadio('si_intent'),
       Symptom_Summary: val('symptom_summary'),
       Previous_ED_Diagnosis: getRadio('prev_ed_dx'),
-      Height_Inches: val('height_in'),
-      Weight_Lbs: val('weight_lbs'),
-      BMI: val('bmi'),
+      Height_in_inches: val('height_in') ? parseFloat(val('height_in')) : null,
+      Weight_in_lbs: val('weight_lbs') ? parseFloat(val('weight_lbs')) : null,
+      BMI: val('bmi') ? parseFloat(val('bmi')) : null,
       Referrer_Type: val('referrer_type'),
       Referral_Name: val('referral_name'),
       Referral_Email: val('referral_email'),
@@ -857,8 +857,8 @@
       // Section 4 - ED Questionnaire
       if (r.Symptom_Summary) document.getElementById('symptom_summary').value = r.Symptom_Summary;
       if (r.Previous_ED_Diagnosis) setRadio('prev_ed_dx', r.Previous_ED_Diagnosis);
-      if (r.Height_Inches) { document.getElementById('height_in').value = r.Height_Inches; }
-      if (r.Weight_Lbs) { document.getElementById('weight_lbs').value = r.Weight_Lbs; calcBMI(); }
+      if (r.Height_in_inches) { document.getElementById('height_in').value = r.Height_in_inches; }
+      if (r.Weight_in_lbs) { document.getElementById('weight_lbs').value = r.Weight_in_lbs; calcBMI(); }
 
       // Section 5 - Referral
       if (r.Referrer_Type) document.getElementById('referrer_type').value = r.Referrer_Type;
