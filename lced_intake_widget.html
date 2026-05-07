@@ -794,8 +794,7 @@
       Height_in_inches: val('height_in') ? parseFloat(val('height_in')) : null,
       Patient_Weight: val('weight_lbs') ? parseFloat(val('weight_lbs')) : null,
       How_Did_You_Hear_About_Us: val('referrer_type'),
-      Referral_Email: val('referral_email') && val('referral_email').includes('@') ? val('referral_email') : null,
-      Referral_Phone: val('referral_phone') && val('referral_phone').replace(/\D/g, '').length === 10 ? val('referral_phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
+      Who_Referred_You: val('referral_name'),
       Guardian_1_Name: val('guardian1_name'),
       Guardian_1_Phone: val('guardian1_phone') && val('guardian1_phone').replace(/\D/g, '').length === 10 ? val('guardian1_phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
       Guardian_1_Email: val('guardian1_email'),
@@ -847,6 +846,8 @@
       console.log("CRM Record result:", JSON.stringify(result));
       const r = result.data[0];
       if (!r) { console.log("No record data returned"); return; }
+      const referKeys = Object.keys(r).filter(k => k.toLowerCase().includes('who') || k.toLowerCase().includes('hear'));
+      alert("Referral fields: " + referKeys.join(', '));
 
       // Section 1 - Contact Info
       if (r.First_Name) document.getElementById('first_name').value = r.First_Name;
@@ -884,8 +885,7 @@
 
       // Section 5 - Referral
       if (r.How_Did_You_Hear_About_Us) document.getElementById('referrer_type').value = r.How_Did_You_Hear_About_Us;
-      if (r.Referral_Email) document.getElementById('referral_email').value = r.Referral_Email;
-      if (r.Referral_Account) document.getElementById('referral_account').value = r.Referral_Account;
+      if (r.Who_Referred_You) document.getElementById('referral_name').value = r.Who_Referred_You;
 
       // Section 6 - Guardian
       if (r.Guardian_1_Name) document.getElementById('guardian1_name').value = r.Guardian_1_Name;
