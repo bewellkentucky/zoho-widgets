@@ -757,37 +757,34 @@
       Phone: val('phone') ? val('phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
       Email: val('email'),
       Date_of_Birth: val('dob'),
-      Age: val('age'),
       Insurance_Provider: val('insurance_provider'),
       Other_Insurance: val('other_insurance'),
-      Program_Interests: getChecked('program'),
+      Program_Interest_s: getChecked('program') || null,
       Patient_Comments: val('patient_comments'),
       Be_Well_Notes: val('be_well_notes'),
-      Currently_Taking_Medications: getRadio('medications'),
+      Currently_taking_medications: getRadio('medications'),
       Current_Therapist: val('current_therapist'),
-      MH_Diagnosis: val('mh_diagnosis'),
+      Mental_health_diagnosis: val('mh_diagnosis'),
       Suicidal_Thoughts: getRadio('si_thoughts'),
       Suicidal_Intentions: getRadio('si_intent'),
-      Symptom_Summary: val('symptom_summary'),
-      Previous_ED_Diagnosis: getRadio('prev_ed_dx'),
+      Brief_summary_of_your_symptoms_how_often: val('symptom_summary'),
+      Previous_Diagnosis_of_ED: getRadio('prev_ed_dx'),
       Height_in_inches: val('height_in') ? parseFloat(val('height_in')) : null,
-      Patient_Weight: val('weight_lbs') ? (isNaN(parseFloat(val('weight_lbs'))) ? null : parseFloat(val('weight_lbs'))) : null,
-      BMI: val('bmi') ? parseFloat(val('bmi')) : null,
-      Referrer_Type: val('referrer_type'),
+      Patient_Weight: val('weight_lbs') ? parseFloat(val('weight_lbs')) : null,
       Referral_Name: val('referral_name'),
       Referral_Email: val('referral_email'),
       Referral_Phone: val('referral_phone') ? val('referral_phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
       Referral_Account: val('referral_account'),
       Guardian1_Name: val('guardian1_name'),
       Guardian1_Phone: val('guardian1_phone') ? val('guardian1_phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
-      Guardian1_Email: val('guardian1_email'),
+      Guardian_1_Email: val('guardian1_email'),
       Guardian2_Name: val('guardian2_name'),
       Guardian2_Phone: val('guardian2_phone') ? val('guardian2_phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
+      Guardian_2_Email: val('guardian2_email'),
     };
 
     // Strip null values from payload
     Object.keys(payload).forEach(k => payload[k] === null && delete payload[k]);
-    alert("Weight raw: " + document.getElementById('weight_lbs').value + " | payload: " + JSON.stringify(payload.Weight_in_lbs));
 
     // ── ZOHO SDK CALL ──
     if (!currentRecordId) {
@@ -827,8 +824,6 @@
       console.log("CRM Record result:", JSON.stringify(result));
       const r = result.data[0];
       if (!r) { console.log("No record data returned"); return; }
-      // Debug: show all field keys
-      alert("All fields: " + Object.keys(r).join(', '));
 
       // Section 1 - Contact Info
       if (r.First_Name) document.getElementById('first_name').value = r.First_Name;
