@@ -837,39 +837,35 @@
       if (r.Other_Insurance) document.getElementById('other_insurance').value = r.Other_Insurance;
       if (r.Patient_Comments) document.getElementById('patient_comments').value = r.Patient_Comments;
       if (r.Be_Well_Notes) document.getElementById('be_well_notes').value = r.Be_Well_Notes;
-      if (r.Program_Interests) {
-        const vals = r.Program_Interests.split(';').map(v => v.trim());
+      if (r.Program_Interest_s) {
+        const vals = r.Program_Interest_s.split(';').map(v => v.trim());
         document.querySelectorAll('input[name="program"]').forEach(cb => {
           if (vals.includes(cb.value)) cb.checked = true;
         });
       }
 
       // Section 3 - Treatment Questions
-      if (r.Currently_Taking_Medications) setRadio('medications', r.Currently_Taking_Medications);
+      if (r.Currently_taking_medications) setRadio('medications', r.Currently_taking_medications);
       if (r.Current_Therapist) document.getElementById('current_therapist').value = r.Current_Therapist;
-      if (r.MH_Diagnosis) document.getElementById('mh_diagnosis').value = r.MH_Diagnosis;
+      if (r.Mental_health_diagnosis) document.getElementById('mh_diagnosis').value = r.Mental_health_diagnosis;
       if (r.Suicidal_Thoughts) setRadio('si_thoughts', r.Suicidal_Thoughts);
       if (r.Suicidal_Intentions) setRadio('si_intent', r.Suicidal_Intentions);
 
       // Section 4 - ED Questionnaire
-      if (r.Symptom_Summary) document.getElementById('symptom_summary').value = r.Symptom_Summary;
-      if (r.Previous_ED_Diagnosis) setRadio('prev_ed_dx', r.Previous_ED_Diagnosis);
+      if (r.Brief_summary_of_your_symptoms_how_often) document.getElementById('symptom_summary').value = r.Brief_summary_of_your_symptoms_how_often;
+      if (r.Previous_Diagnosis_of_ED) setRadio('prev_ed_dx', r.Previous_Diagnosis_of_ED);
       if (r.Height_in_inches) { document.getElementById('height_in').value = r.Height_in_inches; }
       if (r.Patient_Weight) { document.getElementById('weight_lbs').value = r.Patient_Weight; calcBMI(); }
 
       // Section 5 - Referral
-      if (r.Referrer_Type) document.getElementById('referrer_type').value = r.Referrer_Type;
-      if (r.Referral_Name) document.getElementById('referral_name').value = r.Referral_Name;
+      if (r.Referral_Contact) document.getElementById('referral_name').value = r.Referral_Contact;
       if (r.Referral_Email) document.getElementById('referral_email').value = r.Referral_Email;
-      if (r.Referral_Phone) document.getElementById('referral_phone').value = r.Referral_Phone;
       if (r.Referral_Account) document.getElementById('referral_account').value = r.Referral_Account;
 
       // Section 6 - Guardian
-      if (r.Guardian1_Name) document.getElementById('guardian1_name').value = r.Guardian1_Name;
-      if (r.Guardian1_Phone) document.getElementById('guardian1_phone').value = r.Guardian1_Phone;
-      if (r.Guardian1_Email) document.getElementById('guardian1_email').value = r.Guardian1_Email;
-      if (r.Guardian2_Name) document.getElementById('guardian2_name').value = r.Guardian2_Name;
-      if (r.Guardian2_Phone) document.getElementById('guardian2_phone').value = r.Guardian2_Phone;
+      if (r.Guardian_1_Email) document.getElementById('guardian1_email').value = r.Guardian_1_Email;
+      if (r.Guardian_2_Email) document.getElementById('guardian2_email').value = r.Guardian_2_Email;
+      if (r.Guardian_2_Phone) document.getElementById('guardian2_phone').value = r.Guardian_2_Phone;
     });
   });
 
