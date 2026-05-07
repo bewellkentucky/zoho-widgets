@@ -11,15 +11,15 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --teal: #2a7f7f;
-    --teal-light: #e6f4f4;
-    --teal-mid: #c2e0e0;
-    --accent: #e07b4f;
-    --dark: #1a2e2e;
-    --mid: #4a6565;
-    --light: #f5fafa;
+    --teal: #aa6cb0;
+    --teal-light: #f5edf6;
+    --teal-mid: #dfc4e2;
+    --accent: #2a7f7f;
+    --dark: #2d1a2e;
+    --mid: #6b3d6e;
+    --light: #fbf5fc;
     --white: #ffffff;
-    --border: #d0e4e4;
+    --border: #dbc4de;
     --script-bg: #fffbf5;
     --script-border: #f0c99a;
     --note-bg: #fff8e1;
@@ -27,7 +27,7 @@
     --error: #c0392b;
     --success: #27ae60;
     --radius: 10px;
-    --shadow: 0 2px 16px rgba(42,127,127,0.10);
+    --shadow: 0 2px 16px rgba(170,108,176,0.10);
   }
 
   body {
@@ -310,7 +310,7 @@
 
 <!-- Header -->
 <div class="header">
-  <div class="header-logo">L</div>
+  <div class="header-logo"><img src="https://www.louisvillecenterforeatingdisorders.com/wp-content/uploads/2023/10/cropped-LC-for-ED_Color_Stacked-1024x369.png" style="width:36px;height:36px;object-fit:contain;" onerror="this.style.display='none';this.parentNode.innerHTML='L'"></div>
   <div class="header-text">
     <div class="header-title">Patient Intake</div>
     <div class="header-sub">Louisville Center for Eating Disorders</div>
@@ -822,8 +822,6 @@
       console.log("CRM Record result:", JSON.stringify(result));
       const r = result.data[0];
       if (!r) { console.log("No record data returned"); return; }
-      const guardianKeys = Object.keys(r).filter(k => k.toLowerCase().includes('guardian'));
-      alert("Guardian fields: " + guardianKeys.join(', '));
 
       // Section 1 - Contact Info
       if (r.First_Name) document.getElementById('first_name').value = r.First_Name;
