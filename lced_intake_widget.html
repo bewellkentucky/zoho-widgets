@@ -514,11 +514,11 @@
       <label>How did you hear about us?</label>
       <select id="referrer_type">
         <option value="">— Select —</option>
+        <option>Past Patient / Word of Mouth</option>
         <option>Physician / PCP Referral</option>
         <option>Therapist Referral</option>
-        <option>Self-Referral / Internet Search</option>
         <option>Insurance Directory</option>
-        <option>Past Patient / Word of Mouth</option>
+        <option>Self-Referral / Internet Search</option>
         <option>Other Provider / Hospital</option>
         <option>Other</option>
       </select>
@@ -808,6 +808,7 @@
       Previous_Diagnosis_of_ED: getRadio('prev_ed_dx'),
       Height_in_inches: val('height_in') ? parseFloat(val('height_in')) : null,
       Patient_Weight: val('weight_lbs') ? parseFloat(val('weight_lbs')) : null,
+      How_Did_You_Hear_About_Us: val('referrer_type'),
       Referral_Email: val('referral_email') && val('referral_email').includes('@') ? val('referral_email') : null,
       Referral_Phone: val('referral_phone') && val('referral_phone').replace(/\D/g, '').length === 10 ? val('referral_phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
       Guardian_1_Name: val('guardian1_name'),
@@ -897,7 +898,7 @@
       if (r.Patient_Weight) { document.getElementById('weight_lbs').value = r.Patient_Weight; calcBMI(); }
 
       // Section 5 - Referral
-      if (r.Referral_Contact) document.getElementById('referral_name').value = r.Referral_Contact;
+      if (r.How_Did_You_Hear_About_Us) document.getElementById('referrer_type').value = r.How_Did_You_Hear_About_Us;
       if (r.Referral_Email) document.getElementById('referral_email').value = r.Referral_Email;
       if (r.Referral_Account) document.getElementById('referral_account').value = r.Referral_Account;
 
