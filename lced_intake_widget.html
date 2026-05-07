@@ -763,7 +763,7 @@
       Patient_Comments: val('patient_comments'),
       Be_Well_Notes: val('be_well_notes'),
       Currently_taking_medications: getRadio('medications'),
-      Current_Therapist: val('current_therapist'),
+      Current_therapist: val('current_therapist'),
       Mental_health_diagnosis: val('mh_diagnosis'),
       Suicidal_Thoughts: getRadio('si_thoughts'),
       Suicidal_Intentions: getRadio('si_intent'),
@@ -822,6 +822,8 @@
       console.log("CRM Record result:", JSON.stringify(result));
       const r = result.data[0];
       if (!r) { console.log("No record data returned"); return; }
+      const guardianKeys = Object.keys(r).filter(k => k.toLowerCase().includes('guardian'));
+      alert("Guardian fields: " + guardianKeys.join(', '));
 
       // Section 1 - Contact Info
       if (r.First_Name) document.getElementById('first_name').value = r.First_Name;
@@ -846,7 +848,7 @@
 
       // Section 3 - Treatment Questions
       if (r.Currently_taking_medications) setRadio('medications', r.Currently_taking_medications);
-      if (r.Current_Therapist) document.getElementById('current_therapist').value = r.Current_Therapist;
+      if (r.Current_therapist) document.getElementById('current_therapist').value = r.Current_therapist;
       if (r.Mental_health_diagnosis) document.getElementById('mh_diagnosis').value = r.Mental_health_diagnosis;
       if (r.Suicidal_Thoughts) setRadio('si_thoughts', r.Suicidal_Thoughts);
       if (r.Suicidal_Intentions) setRadio('si_intent', r.Suicidal_Intentions);
