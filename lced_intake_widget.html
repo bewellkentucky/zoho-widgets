@@ -827,9 +827,8 @@
       console.log("CRM Record result:", JSON.stringify(result));
       const r = result.data[0];
       if (!r) { console.log("No record data returned"); return; }
-      // Debug: find weight field name
-      const weightKeys = Object.keys(r).filter(k => k.toLowerCase().includes('weight'));
-      alert("Weight field keys: " + weightKeys.join(', '));
+      // Debug: show all field keys
+      alert("All fields: " + Object.keys(r).join(', '));
 
       // Section 1 - Contact Info
       if (r.First_Name) document.getElementById('first_name').value = r.First_Name;
