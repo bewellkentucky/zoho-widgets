@@ -798,6 +798,7 @@
       APIData: { id: currentRecordId, ...payload },
       Trigger: []
     }).then(function(response) {
+      console.log("Save response:", JSON.stringify(response));
       if (response.data && response.data[0].code === "SUCCESS") {
         showToast("✓ Intake saved successfully!", "success");
         setTimeout(() => {
@@ -805,12 +806,10 @@
           document.getElementById('btn-save').style.background = 'var(--success)';
         }, 600);
       } else {
-        showToast("Save failed — check field API names", "error");
-        console.error("Save response:", JSON.stringify(response));
+        alert("Save response: " + JSON.stringify(response));
       }
     }).catch(function(err) {
-      showToast("API Error — check console", "error");
-      console.error("API Error:", JSON.stringify(err));
+      alert("API Error: " + JSON.stringify(err));
     });
   }
 
