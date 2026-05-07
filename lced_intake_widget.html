@@ -771,7 +771,7 @@
       Symptom_Summary: val('symptom_summary'),
       Previous_ED_Diagnosis: getRadio('prev_ed_dx'),
       Height_in_inches: val('height_in') ? parseFloat(val('height_in')) : null,
-      Weight_in_lbs: val('weight_lbs') ? (isNaN(parseFloat(val('weight_lbs'))) ? null : parseFloat(val('weight_lbs'))) : null,
+      Patient_Weight: val('weight_lbs') ? (isNaN(parseFloat(val('weight_lbs'))) ? null : parseFloat(val('weight_lbs'))) : null,
       BMI: val('bmi') ? parseFloat(val('bmi')) : null,
       Referrer_Type: val('referrer_type'),
       Referral_Name: val('referral_name'),
@@ -860,7 +860,7 @@
       if (r.Symptom_Summary) document.getElementById('symptom_summary').value = r.Symptom_Summary;
       if (r.Previous_ED_Diagnosis) setRadio('prev_ed_dx', r.Previous_ED_Diagnosis);
       if (r.Height_in_inches) { document.getElementById('height_in').value = r.Height_in_inches; }
-      if (r.Weight_in_lbs) { document.getElementById('weight_lbs').value = r.Weight_in_lbs; calcBMI(); }
+      if (r.Patient_Weight) { document.getElementById('weight_lbs').value = r.Patient_Weight; calcBMI(); }
 
       // Section 5 - Referral
       if (r.Referrer_Type) document.getElementById('referrer_type').value = r.Referrer_Type;
