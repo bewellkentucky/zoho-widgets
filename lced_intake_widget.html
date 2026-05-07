@@ -754,8 +754,8 @@
     const payload = {
       First_Name: val('first_name'),
       Last_Name: val('last_name'),
-      Phone: val('phone') ? val('phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
-      Email: val('email'),
+      Phone: val('phone') && val('phone').replace(/\D/g, '').length === 10 ? val('phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
+      Email: val('email') && val('email').includes('@') ? val('email') : null,
       Date_of_Birth: val('dob'),
       Insurance_Provider: val('insurance_provider'),
       Other_Insurance: val('other_insurance'),
@@ -773,13 +773,13 @@
       Patient_Weight: val('weight_lbs') ? parseFloat(val('weight_lbs')) : null,
       Referral_Name: val('referral_name'),
       Referral_Email: val('referral_email'),
-      Referral_Phone: val('referral_phone') ? val('referral_phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
+      Referral_Phone: val('referral_phone') && val('referral_phone').replace(/\D/g, '').length === 10 ? val('referral_phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
       Referral_Account: val('referral_account'),
       Guardian1_Name: val('guardian1_name'),
-      Guardian1_Phone: val('guardian1_phone') ? val('guardian1_phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
+      Guardian1_Phone: val('guardian1_phone') && val('guardian1_phone').replace(/\D/g, '').length === 10 ? val('guardian1_phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
       Guardian_1_Email: val('guardian1_email'),
       Guardian2_Name: val('guardian2_name'),
-      Guardian2_Phone: val('guardian2_phone') ? val('guardian2_phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
+      Guardian2_Phone: val('guardian2_phone') && val('guardian2_phone').replace(/\D/g, '').length === 10 ? val('guardian2_phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
       Guardian_2_Email: val('guardian2_email'),
     };
 
