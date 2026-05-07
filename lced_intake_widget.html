@@ -759,7 +759,7 @@
       Date_of_Birth: val('dob'),
       Insurance_Provider: val('insurance_provider'),
       Other_Insurance: val('other_insurance'),
-      Program_Interest_s: getChecked('program') || null,
+      Program_Interest_s: Array.from(document.querySelectorAll('input[name="program"]:checked')).map(e => e.value),
       Patient_Comments: val('patient_comments'),
       Be_Well_Notes: val('be_well_notes'),
       Currently_taking_medications: getRadio('medications'),
