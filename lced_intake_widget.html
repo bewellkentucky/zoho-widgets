@@ -834,7 +834,7 @@
       Trigger: []
     }).then(function(response) {
       if (response.data && response.data[0].code === "SUCCESS") {
-        showToast("✓ Intake saved successfully!", "success");
+        showToast("✓ Saved! Refresh the contact page to see updates.", "success");
         setTimeout(() => {
           document.getElementById('btn-save').textContent = '✓ Saved';
           document.getElementById('btn-save').style.background = 'var(--success)';
