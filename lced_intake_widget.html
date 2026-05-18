@@ -11,15 +11,15 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --teal: #1c3e62;
-    --teal-light: #e8eef5;
-    --teal-mid: #b8cde0;
-    --accent: #aa6cb0;
-    --dark: #0f2236;
-    --mid: #2d5a8a;
-    --light: #f4f7fa;
+    --teal: #2a7f7f;
+    --teal-light: #e6f4f4;
+    --teal-mid: #c2e0e0;
+    --accent: #e07b4f;
+    --dark: #1a2e2e;
+    --mid: #4a6565;
+    --light: #f5fafa;
     --white: #ffffff;
-    --border: #c4d4e4;
+    --border: #d0e4e4;
     --script-bg: #fffbf5;
     --script-border: #f0c99a;
     --note-bg: #fff8e1;
@@ -27,7 +27,7 @@
     --error: #c0392b;
     --success: #27ae60;
     --radius: 10px;
-    --shadow: 0 2px 16px rgba(28,62,98,0.10);
+    --shadow: 0 2px 16px rgba(42,127,127,0.10);
   }
 
   body {
@@ -310,7 +310,7 @@
 
 <!-- Header -->
 <div class="header">
-  <div class="header-logo"><img src="https://bewellkentucky.github.io/zoho-widgets/LC%20for%20ED_Color_Icon%20(2).png" style="width:36px;height:36px;object-fit:contain;" onerror="this.style.display='none';this.parentNode.innerHTML='L'"></div>
+  <div class="header-logo">L</div>
   <div class="header-text">
     <div class="header-title">Patient Intake</div>
     <div class="header-sub">Louisville Center for Eating Disorders</div>
@@ -511,22 +511,37 @@
     <div class="section-divider"></div>
 
     <div class="field-group">
-      <label>How Did You Hear About Us?</label>
+      <label>How did you hear about us?</label>
       <select id="referrer_type">
         <option value="">— Select —</option>
-        <option>Past Patient / Word of Mouth</option>
         <option>Physician / PCP Referral</option>
         <option>Therapist Referral</option>
-        <option>Insurance Directory</option>
         <option>Self-Referral / Internet Search</option>
+        <option>Insurance Directory</option>
+        <option>Past Patient / Word of Mouth</option>
         <option>Other Provider / Hospital</option>
         <option>Other</option>
       </select>
     </div>
-    <div class="field-group">
-      <label>Who Referred You?</label>
-      <input type="text" id="referral_name" placeholder="Name of referring person or organization">
-      <div style="font-size:11px;color:var(--accent);margin-top:4px;font-style:italic;">⚠ Remember to look up and verify this referral source later</div>
+    <div class="field-row">
+      <div class="field-group">
+        <label>Referral Contact Name</label>
+        <input type="text" id="referral_name" placeholder="Full name">
+      </div>
+      <div class="field-group">
+        <label>Referral Email</label>
+        <input type="email" id="referral_email" placeholder="email@domain.com">
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field-group">
+        <label>Referral Phone</label>
+        <input type="tel" id="referral_phone" placeholder="(502) 000-0000">
+      </div>
+      <div class="field-group">
+        <label>Referral Account / Company</label>
+        <input type="text" id="referral_account" placeholder="Practice or organization name">
+      </div>
     </div>
   </div>
 
@@ -540,47 +555,31 @@
       <div class="note-text">Only complete this section if the patient is <strong>under 18 years of age</strong>. Skip and proceed to Review if not applicable.</div>
     </div>
 
-    <div style="background:var(--teal-light);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:14px;">
-      <div style="font-size:12px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;">Guardian 1</div>
-      <div class="field-row">
-        <div class="field-group">
-          <label>Name</label>
-          <input type="text" id="guardian1_name" placeholder="Full name">
-        </div>
-        <div class="field-group">
-          <label>Phone</label>
-          <input type="tel" id="guardian1_phone" placeholder="(502) 000-0000">
-        </div>
+    <div style="font-size:12px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;">Guardian 1</div>
+    <div class="field-row">
+      <div class="field-group">
+        <label>Guardian 1 Name</label>
+        <input type="text" id="guardian1_name" placeholder="Full name">
       </div>
       <div class="field-group">
-        <label>Email</label>
-        <input type="email" id="guardian1_email" placeholder="email@domain.com">
-      </div>
-      <div class="field-group">
-        <label>Notes</label>
-        <textarea id="guardian1_notes" placeholder="Notes about Guardian 1..."></textarea>
+        <label>Guardian 1 Phone</label>
+        <input type="tel" id="guardian1_phone" placeholder="(502) 000-0000">
       </div>
     </div>
+    <div class="field-group">
+      <label>Guardian 1 Email</label>
+      <input type="email" id="guardian1_email" placeholder="email@domain.com">
+    </div>
 
-    <div style="background:var(--light);border:1px solid var(--border);border-radius:var(--radius);padding:12px 14px;margin-bottom:14px;">
-      <div style="font-size:12px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px;">Guardian 2 <span style="font-weight:400;text-transform:none;letter-spacing:0;font-size:11px;">(if applicable)</span></div>
-      <div class="field-row">
-        <div class="field-group">
-          <label>Name</label>
-          <input type="text" id="guardian2_name" placeholder="Full name">
-        </div>
-        <div class="field-group">
-          <label>Phone</label>
-          <input type="tel" id="guardian2_phone" placeholder="(502) 000-0000">
-        </div>
+    <div style="font-size:12px;font-weight:600;color:var(--mid);text-transform:uppercase;letter-spacing:.04em;margin:12px 0 8px;">Guardian 2 (if applicable)</div>
+    <div class="field-row">
+      <div class="field-group">
+        <label>Guardian 2 Name</label>
+        <input type="text" id="guardian2_name" placeholder="Full name">
       </div>
       <div class="field-group">
-        <label>Email</label>
-        <input type="email" id="guardian2_email" placeholder="email@domain.com">
-      </div>
-      <div class="field-group">
-        <label>Notes</label>
-        <textarea id="guardian2_notes" placeholder="Notes about Guardian 2..."></textarea>
+        <label>Guardian 2 Phone</label>
+        <input type="tel" id="guardian2_phone" placeholder="(502) 000-0000">
       </div>
     </div>
   </div>
@@ -619,15 +618,6 @@
     const m = today.getMonth() - birth.getMonth();
     if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
     document.getElementById('age').value = age + ' years';
-    // Show/hide guardian tab based on age
-    const guardianPill = document.querySelectorAll('.step-pill')[5];
-    if (age < 18) {
-      guardianPill.style.display = '';
-      guardianPill.dataset.skip = 'false';
-    } else {
-      guardianPill.style.display = 'none';
-      guardianPill.dataset.skip = 'true';
-    }
   }
 
   // ── BMI calc ──
@@ -679,23 +669,11 @@
 
   function nextStep() {
     if (!validateStep()) return;
-    // Skip guardian step (step 6) if patient is 18+
-    const guardianPill = document.querySelectorAll('.step-pill')[5];
-    if (currentStep === 5 && guardianPill.dataset.skip === 'true') {
-      goToStep(7);
-    } else {
-      goToStep(currentStep + 1);
-    }
+    goToStep(currentStep + 1);
   }
 
   function prevStep() {
-    // Skip guardian step (step 6) if patient is 18+
-    const guardianPill = document.querySelectorAll('.step-pill')[5];
-    if (currentStep === 7 && guardianPill.dataset.skip === 'true') {
-      goToStep(5);
-    } else {
-      goToStep(currentStep - 1);
-    }
+    goToStep(currentStep - 1);
   }
 
   // ── Validation ──
@@ -776,33 +754,35 @@
     const payload = {
       First_Name: val('first_name'),
       Last_Name: val('last_name'),
-      Phone: val('phone') && val('phone').replace(/\D/g, '').length === 10 ? val('phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
-      Email: val('email') && val('email').includes('@') ? val('email') : null,
+      Phone: val('phone') ? val('phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
+      Email: val('email'),
       Date_of_Birth: val('dob'),
+      Age: val('age'),
       Insurance_Provider: val('insurance_provider'),
       Other_Insurance: val('other_insurance'),
-      Program_Interest_s: Array.from(document.querySelectorAll('input[name="program"]:checked')).map(e => e.value),
+      Program_Interests: getChecked('program'),
       Patient_Comments: val('patient_comments'),
       Be_Well_Notes: val('be_well_notes'),
-      Currently_taking_medications: getRadio('medications'),
-      Current_therapist: val('current_therapist'),
-      Mental_health_diagnosis: val('mh_diagnosis'),
+      Currently_Taking_Medications: getRadio('medications'),
+      Current_Therapist: val('current_therapist'),
+      MH_Diagnosis: val('mh_diagnosis'),
       Suicidal_Thoughts: getRadio('si_thoughts'),
       Suicidal_Intentions: getRadio('si_intent'),
-      Brief_summary_of_your_symptoms_how_often: val('symptom_summary'),
-      Previous_Diagnosis_of_ED: getRadio('prev_ed_dx'),
-      Height_in_inches: val('height_in') ? parseFloat(val('height_in')) : null,
-      Patient_Weight: val('weight_lbs') ? parseFloat(val('weight_lbs')) : null,
-      How_Did_You_Hear_About_Us: val('referrer_type'),
-      Who_Referred_You: val('referral_name'),
-      Guardian_1_Name: val('guardian1_name'),
-      Guardian_1_Phone: val('guardian1_phone') && val('guardian1_phone').replace(/\D/g, '').length === 10 ? val('guardian1_phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
-      Guardian_1_Email: val('guardian1_email'),
-      Guardian_1_Notes: val('guardian1_notes'),
-      Guardian_2_Name: val('guardian2_name'),
-      Guardian_2_Phone: val('guardian2_phone') && val('guardian2_phone').replace(/\D/g, '').length === 10 ? val('guardian2_phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
-      Guardian_2_Email: val('guardian2_email'),
-      Guardian_2_Notes: val('guardian2_notes'),
+      Symptom_Summary: val('symptom_summary'),
+      Previous_ED_Diagnosis: getRadio('prev_ed_dx'),
+      Height_Inches: val('height_in'),
+      Weight_Lbs: val('weight_lbs'),
+      BMI: val('bmi'),
+      Referrer_Type: val('referrer_type'),
+      Referral_Name: val('referral_name'),
+      Referral_Email: val('referral_email'),
+      Referral_Phone: val('referral_phone') ? val('referral_phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
+      Referral_Account: val('referral_account'),
+      Guardian1_Name: val('guardian1_name'),
+      Guardian1_Phone: val('guardian1_phone') ? val('guardian1_phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
+      Guardian1_Email: val('guardian1_email'),
+      Guardian2_Name: val('guardian2_name'),
+      Guardian2_Phone: val('guardian2_phone') ? val('guardian2_phone').replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3') : null,
     };
 
     // Strip null values from payload
@@ -818,7 +798,6 @@
       APIData: { id: currentRecordId, ...payload },
       Trigger: []
     }).then(function(response) {
-      console.log("Save response:", JSON.stringify(response));
       if (response.data && response.data[0].code === "SUCCESS") {
         showToast("✓ Intake saved successfully!", "success");
         setTimeout(() => {
@@ -826,10 +805,12 @@
           document.getElementById('btn-save').style.background = 'var(--success)';
         }, 600);
       } else {
-        alert("Save response: " + JSON.stringify(response));
+        showToast("Save failed — check field API names", "error");
+        console.error("Save response:", JSON.stringify(response));
       }
     }).catch(function(err) {
-      alert("API Error: " + JSON.stringify(err));
+      showToast("API Error — check console", "error");
+      console.error("API Error:", JSON.stringify(err));
     });
   }
 
@@ -859,41 +840,39 @@
       if (r.Other_Insurance) document.getElementById('other_insurance').value = r.Other_Insurance;
       if (r.Patient_Comments) document.getElementById('patient_comments').value = r.Patient_Comments;
       if (r.Be_Well_Notes) document.getElementById('be_well_notes').value = r.Be_Well_Notes;
-      if (r.Program_Interest_s) {
-        const vals = Array.isArray(r.Program_Interest_s) 
-          ? r.Program_Interest_s 
-          : r.Program_Interest_s.split(';').map(v => v.trim());
+      if (r.Program_Interests) {
+        const vals = r.Program_Interests.split(';').map(v => v.trim());
         document.querySelectorAll('input[name="program"]').forEach(cb => {
           if (vals.includes(cb.value)) cb.checked = true;
         });
       }
 
       // Section 3 - Treatment Questions
-      if (r.Currently_taking_medications) setRadio('medications', r.Currently_taking_medications);
-      if (r.Current_therapist) document.getElementById('current_therapist').value = r.Current_therapist;
-      if (r.Mental_health_diagnosis) document.getElementById('mh_diagnosis').value = r.Mental_health_diagnosis;
+      if (r.Currently_Taking_Medications) setRadio('medications', r.Currently_Taking_Medications);
+      if (r.Current_Therapist) document.getElementById('current_therapist').value = r.Current_Therapist;
+      if (r.MH_Diagnosis) document.getElementById('mh_diagnosis').value = r.MH_Diagnosis;
       if (r.Suicidal_Thoughts) setRadio('si_thoughts', r.Suicidal_Thoughts);
       if (r.Suicidal_Intentions) setRadio('si_intent', r.Suicidal_Intentions);
 
       // Section 4 - ED Questionnaire
-      if (r.Brief_summary_of_your_symptoms_how_often) document.getElementById('symptom_summary').value = r.Brief_summary_of_your_symptoms_how_often;
-      if (r.Previous_Diagnosis_of_ED) setRadio('prev_ed_dx', r.Previous_Diagnosis_of_ED);
-      if (r.Height_in_inches) { document.getElementById('height_in').value = r.Height_in_inches; }
-      if (r.Patient_Weight) { document.getElementById('weight_lbs').value = r.Patient_Weight; calcBMI(); }
+      if (r.Symptom_Summary) document.getElementById('symptom_summary').value = r.Symptom_Summary;
+      if (r.Previous_ED_Diagnosis) setRadio('prev_ed_dx', r.Previous_ED_Diagnosis);
+      if (r.Height_Inches) { document.getElementById('height_in').value = r.Height_Inches; }
+      if (r.Weight_Lbs) { document.getElementById('weight_lbs').value = r.Weight_Lbs; calcBMI(); }
 
       // Section 5 - Referral
-      if (r.How_Did_You_Hear_About_Us) document.getElementById('referrer_type').value = r.How_Did_You_Hear_About_Us;
-      if (r.Who_Referred_You) document.getElementById('referral_name').value = r.Who_Referred_You;
+      if (r.Referrer_Type) document.getElementById('referrer_type').value = r.Referrer_Type;
+      if (r.Referral_Name) document.getElementById('referral_name').value = r.Referral_Name;
+      if (r.Referral_Email) document.getElementById('referral_email').value = r.Referral_Email;
+      if (r.Referral_Phone) document.getElementById('referral_phone').value = r.Referral_Phone;
+      if (r.Referral_Account) document.getElementById('referral_account').value = r.Referral_Account;
 
       // Section 6 - Guardian
-      if (r.Guardian_1_Name) document.getElementById('guardian1_name').value = r.Guardian_1_Name;
-      if (r.Guardian_1_Phone) document.getElementById('guardian1_phone').value = r.Guardian_1_Phone;
-      if (r.Guardian_1_Email) document.getElementById('guardian1_email').value = r.Guardian_1_Email;
-      if (r.Guardian_1_Notes) document.getElementById('guardian1_notes').value = r.Guardian_1_Notes;
-      if (r.Guardian_2_Name) document.getElementById('guardian2_name').value = r.Guardian_2_Name;
-      if (r.Guardian_2_Phone) document.getElementById('guardian2_phone').value = r.Guardian_2_Phone;
-      if (r.Guardian_2_Email) document.getElementById('guardian2_email').value = r.Guardian_2_Email;
-      if (r.Guardian_2_Notes) document.getElementById('guardian2_notes').value = r.Guardian_2_Notes;
+      if (r.Guardian1_Name) document.getElementById('guardian1_name').value = r.Guardian1_Name;
+      if (r.Guardian1_Phone) document.getElementById('guardian1_phone').value = r.Guardian1_Phone;
+      if (r.Guardian1_Email) document.getElementById('guardian1_email').value = r.Guardian1_Email;
+      if (r.Guardian2_Name) document.getElementById('guardian2_name').value = r.Guardian2_Name;
+      if (r.Guardian2_Phone) document.getElementById('guardian2_phone').value = r.Guardian2_Phone;
     });
   });
 
