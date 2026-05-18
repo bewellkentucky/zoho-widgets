@@ -271,13 +271,7 @@
     box-shadow: 0 2px 8px rgba(224,123,79,0.3);
   }
   .btn-save:hover { background: #c0622e; }
-  .btn-save-close {
-    background: #aa6cb0;
-    color: white;
-    flex: 1;
-    box-shadow: 0 2px 8px rgba(170,108,176,0.3);
-  }
-  .btn-save-close:hover { background: #8f53a0; }
+
 
   .step-counter {
     font-size: 11px; color: var(--mid); white-space: nowrap;
@@ -607,7 +601,6 @@
   <span class="step-counter" id="step-counter">Step 1 of 7</span>
   <button class="btn btn-next" id="btn-next" onclick="nextStep()">Next →</button>
   <button class="btn btn-save" id="btn-save" onclick="saveRecord()" style="display:none">💾 Save to CRM</button>
-  <button class="btn btn-save-close" id="btn-save-close" onclick="saveAndClose()" style="display:none">💾 Save & Close</button>
 </div>
 
 <!-- Toast -->
@@ -681,7 +674,6 @@
     document.getElementById('btn-back').style.display = currentStep > 1 ? 'inline-flex' : 'none';
     document.getElementById('btn-next').style.display = currentStep < totalSteps ? 'inline-flex' : 'none';
     document.getElementById('btn-save').style.display = currentStep === totalSteps ? 'inline-flex' : 'none';
-    document.getElementById('btn-save-close').style.display = currentStep === totalSteps ? 'inline-flex' : 'none';
 
     window.scrollTo(0, 0);
   }
@@ -849,30 +841,6 @@
           document.getElementById('btn-save').textContent = '✓ Saved';
           document.getElementById('btn-save').style.background = 'var(--success)';
         }, 600);
-      } else {
-        alert("Save response: " + JSON.stringify(response));
-      }
-    }).catch(function(err) {
-      alert("API Error: " + JSON.stringify(err));
-    });
-  }
-  function saveAndClose() {
-    if (typeof ZOHO === 'undefined' || typeof ZOHO.CRM === 'undefined') {
-      alert("ZOHO SDK not loaded — external hosting SDK issue confirmed");
-      return;
-    }
-    if (!currentRecordId) {
-      showToast("No record ID found — try closing and reopening", "error");
-      return;
-    }
-    const payload = buildPayload();
-    ZOHO.CRM.API.updateRecord({
-      Entity: "Contacts",
-      APIData: { id: currentRecordId, ...payload },
-      Trigger: []
-    }).then(function(response) {
-      if (response.data && response.data[0].code === "SUCCESS") {
-        ZOHO.CRM.UI.Popup.closeReload();
       } else {
         alert("Save response: " + JSON.stringify(response));
       }
