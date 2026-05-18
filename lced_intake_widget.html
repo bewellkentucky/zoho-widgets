@@ -605,7 +605,7 @@
 <div class="footer">
   <button class="btn btn-back" id="btn-back" onclick="prevStep()" style="display:none">← Back</button>
   <span class="step-counter" id="step-counter">Step 1 of 7</span>
-  <span id="link-save-close" onclick="autoSave(); ZOHO.CRM.UI.Popup.closeReload()" class="save-close-link">Save & Close</span>
+  <span id="link-save-close" onclick="autoSave().then(() => ZOHO.CRM.UI.Popup.closeReload())" class="save-close-link">Save & Close</span>
   <button class="btn btn-next" id="btn-next" onclick="nextStep()">Next →</button>
   <button class="btn btn-save" id="btn-save" onclick="saveRecord()" style="display:none">💾 Save to CRM</button>
 </div>
@@ -813,9 +813,9 @@
   }
 
   function autoSave() {
-    if (!currentRecordId) return;
+    if (!currentRecordId) return Promise.resolve();
     const payload = buildPayload();
-    ZOHO.CRM.API.updateRecord({
+    return ZOHO.CRM.API.updateRecord({
       Entity: "Contacts",
       APIData: { id: currentRecordId, ...payload },
       Trigger: []
