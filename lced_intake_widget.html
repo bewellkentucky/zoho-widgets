@@ -240,7 +240,7 @@
     background: var(--white);
     border-top: 1px solid var(--border);
     padding: 10px 20px;
-    display: flex; gap: 8px; align-items: center;
+    display: flex; gap: 8px; align-items: center; justify-content: flex-end;
     box-shadow: 0 -2px 12px rgba(42,127,127,0.08);
   }
   .btn {
@@ -260,21 +260,21 @@
   .btn-next {
     background: var(--teal);
     color: white;
-    flex: 1;
+    min-width: 160px;
     box-shadow: 0 2px 8px rgba(42,127,127,0.25);
   }
   .btn-next:hover { background: #236969; }
   .btn-save {
     background: var(--accent);
     color: white;
-    flex: 1;
+    min-width: 160px;
     box-shadow: 0 2px 8px rgba(224,123,79,0.3);
   }
   .btn-save:hover { background: #c0622e; }
 
 
   .step-counter {
-    font-size: 11px; color: var(--mid); white-space: nowrap;
+    font-size: 11px; color: var(--mid); white-space: nowrap; margin-right: auto;
   }
 
   /* ── Toast ── */
