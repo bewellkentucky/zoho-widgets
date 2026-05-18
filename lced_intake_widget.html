@@ -769,7 +769,7 @@
     rows.forEach(r => {
       html += `<div class="summary-group"><div class="summary-group-title">${r.group}</div>`;
       r.fields.forEach(([k, v]) => {
-        html += `<div class="summary-row"><div class="summary-key">${k}</div><div class="summary-val">${v}</div></div>`;
+        html += `<div class="summary-row"><div class="summary-key">${k}</div><div class="summary-val">${v ?? ''}</div></div>`;
       });
       html += '</div>';
     });
@@ -821,7 +821,7 @@
       Trigger: []
     }).then(function(response) {
       if (response.data && response.data[0].code === "SUCCESS") {
-        showToast("✓ Auto-saved", "success");
+        if (currentStep < totalSteps) showToast("✓ Auto-saved", "success");
       }
     }).catch(function(err) {
       console.error("Auto-save error:", err);
@@ -844,6 +844,7 @@
     }).then(function(response) {
       if (response.data && response.data[0].code === "SUCCESS") {
         showToast("✓ Saved! Refresh the contact page to see updates.", "success");
+        ZOHO.CRM.UI.Popup.closeReload();
         setTimeout(() => {
           document.getElementById('btn-save').textContent = '✓ Saved';
           document.getElementById('btn-save').style.background = 'var(--success)';
