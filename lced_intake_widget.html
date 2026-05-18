@@ -276,8 +276,12 @@
 
 
   .step-counter {
-    font-size: 11px; color: var(--mid); white-space: nowrap; margin-right: auto;
+    font-size: 11px; color: var(--mid); white-space: nowrap;
   }
+  .save-close-link {
+    font-size: 12px; color: var(--mid); cursor: pointer; white-space: nowrap; margin-right: auto;
+  }
+  .save-close-link:hover { color: var(--teal); }
 
   /* ── Toast ── */
   .toast {
@@ -601,6 +605,7 @@
 <div class="footer">
   <button class="btn btn-back" id="btn-back" onclick="prevStep()" style="display:none">← Back</button>
   <span class="step-counter" id="step-counter">Step 1 of 7</span>
+  <span id="link-save-close" onclick="autoSave(); ZOHO.CRM.UI.Popup.closeReload()" class="save-close-link">Save & Close</span>
   <button class="btn btn-next" id="btn-next" onclick="nextStep()">Next →</button>
   <button class="btn btn-save" id="btn-save" onclick="saveRecord()" style="display:none">💾 Save to CRM</button>
 </div>
@@ -676,6 +681,7 @@
     document.getElementById('btn-back').style.display = currentStep > 1 ? 'inline-flex' : 'none';
     document.getElementById('btn-next').style.display = currentStep < totalSteps ? 'inline-flex' : 'none';
     document.getElementById('btn-save').style.display = currentStep === totalSteps ? 'inline-flex' : 'none';
+    document.getElementById('link-save-close').style.display = currentStep < totalSteps ? 'inline' : 'none';
 
     window.scrollTo(0, 0);
   }
